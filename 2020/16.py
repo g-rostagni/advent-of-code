@@ -48,6 +48,8 @@ for ticket in data[2][1:]:
 	if not invalid:
 		validtickets.append(ticket)
 
+print('error rate:',tot)
+
 ticketform = ['' for i in range(len(validtickets[0]))]
 for k in range(len(validtickets[0])):
 	for j in range(len(allowed)):	
@@ -71,11 +73,9 @@ for k in range(len(validtickets[0])):
 
 tot = 1
 myticket = data[1][1].split(',')
-for f,n in zip(ticketform,myticket):
-	print(f,n)
 	
 for i in range(len(ticketform)):
 	if 'departure' in ticketform[i]:
 		#print(ticketform[i],myticket[i])
 		tot *= int(myticket[i])
-print(tot)
+print('departures product:',tot)
