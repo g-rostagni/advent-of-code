@@ -26,10 +26,9 @@ def printdata(data):
 data = import_data('11-data')
 
 flashes = 0
-allflash = False
 step = 0
 
-while not allflash:
+while True:
 	data = plus1(data)
 	flashing = []
 	for y in range(len(data)):
@@ -45,7 +44,7 @@ while not allflash:
 	data = [[n if n <= 9 else 0 for n in line] for line in data]
 	step += 1
 	if len(flashing) == len(data)*len(data[0]):
-		allflash = True
+		break
 
 print('after step:',step)
 printdata(data)
