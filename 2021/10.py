@@ -3,26 +3,26 @@ def import_data(filename):
         return [line.strip() for line in f if line.strip()]
         
 def matchbracket(char):
-	if char == '(':
-		return ')'
-	elif char == '[':
-		return ']'
-	elif char == '{':
-		return '}'
-	elif char == '<':
-		return '>'
-	elif char == ')':
-		return '('
-	elif char == ']':
-		return '['
-	elif char == '}':
-		return '{'
-	elif char == '>':
-		return '<'
-	else:
-		quit()
+	match char:
+		case '(':
+			return ')'
+		case '[':
+			return ']'
+		case '{':
+			return '}'
+		case '<':
+			return '>'
+		case ')':
+			return '('
+		case ']':
+			return '['
+		case '}':
+			return '{'
+		case '>':
+			return '<'
+		case _:
+			quit()
 		
-
 def is_corrupt(char,op):
 	for i in '([{<':
 		if op[-1] == i and char != matchbracket(i):
@@ -52,38 +52,30 @@ def score_missing(char):
 			return 4
 
 data = import_data('10-data')
-validdata = []
 
 score1 = 0
 scores2 = []
 
 for line in data:
 	valid = True
-	validdata.append(line)
-	op = ''
+	opened = []
 	for char in line:
 		if char in '([{<':
-			op += char
-		elif is_corrupt(char,op):
+			opened.append(char)
+		elif is_corrupt(char,opened):
 			score1 += score_corrupt(char)
-			validdata.pop()
 			valid = False
 			break
 		else:
-			op = op[:-1]
+			opened.pop()
 			
 	if valid:
-		missing = ''
-		for char in reversed(op):
-			missing += matchbracket(char)
 		s2 = 0
-		for char in missing:
-			s2 = s2*5 + score_missing(char)
+		for char in reversed(opened):
+			s2 = s2*5 + score_missing(matchbracket(char))
 		scores2.append(s2)	
 
 print(score1)
 
 score2 = sorted(scores2)[int(len(scores2)/2)] 
 print(score2)
-
-

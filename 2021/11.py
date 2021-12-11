@@ -2,12 +2,6 @@ def import_data(filename):
         f = open(filename,'r')
         data = [[int(char) for char in line.strip()] for line in f]
         return data
-  
-
-def plus1(data):
-	data = [[n+1 for n in line] for line in data]
-	return data
-
 
 def adjacent(y,x,ymax,xmax):
 	adj = []
@@ -29,7 +23,7 @@ flashes = 0
 step = 0
 
 while True:
-	data = plus1(data)
+	data = [[n+1 for n in line] for line in data]
 	flashing = []
 	for y in range(len(data)):
 		for x in range(len(data[0])):
