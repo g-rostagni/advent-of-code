@@ -66,7 +66,7 @@ for line in data:
 			op += char
 		elif is_corrupt(char,op):
 			score1 += score_corrupt(char)
-			validdata = validdata[:-1]
+			validdata.pop()
 			valid = False
 			break
 		else:
