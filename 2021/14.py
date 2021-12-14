@@ -1,13 +1,21 @@
 def import_data(filename):
         f = open(filename,'r')
-        starting = f.readline().strip()
-        data = []
+        poly = {}
+        letters = {}
+        line = f.readline().strip()
+        for i in range(len(line)-1):
+        	poly = add_to_dict(poly,line[i:i+2])
+        	letters = add_to_dict(letters,line[i])
+        letters = add_to_dict(letters,line[-1])      
+        
+        ins = {}
         f.readline()
         line = f.readline()
         while line.strip():
-        	data.append(line.strip().split(' -> '))
+        	l = line.strip().split(' -> ')
+        	ins[l[0]] = l[1]
         	line = f.readline()
-        return starting,data
+        return poly, letters, ins
         
 def add_to_dict(d,e,n=1):
 	if e not in d:
@@ -15,41 +23,27 @@ def add_to_dict(d,e,n=1):
 	d[e] += n
 	return d
 
-def add_pairs(d,l,insertions):
+def add_pairs(d,l,i):
 	dnew = d.copy()
 	for pair in d:
-		if d[pair]:
-			for insertion in insertions:
-				if insertion[0] == pair:
-					dnew[pair] -= d[pair]
-					for newpair in [insertion[0][0] + insertion[1], insertion[1] + insertion[0][1]]:
-						dnew = add_to_dict(dnew,newpair,d[pair])
-					l = add_to_dict(l,insertion[1],d[pair])
+		if d[pair] and pair in i:
+			dnew[pair] -= d[pair]
+			for newpair in [pair[0] + i[pair], i[pair] + pair[1]]:
+				dnew = add_to_dict(dnew,newpair,d[pair])
+			l = add_to_dict(l,i[pair],d[pair])
 	return dnew,l
 
-polymer, data = import_data('14-data')
-
-polymerD = {}
-for i in range(len(polymer)-1):
-	polymerD = add_to_dict(polymerD,polymer[i:i+2])
-	
-letters = {}
-for let in polymer:
-	letters = add_to_dict(letters,let)
+polymer, letters, insertions = import_data('14-data')
 
 steps = 40
 
 for step in range(steps):
-	polymerD,letters = add_pairs(polymerD,letters,data)
+	polymer,letters = add_pairs(polymer,letters,insertions)
 
-letmax = ['',0]
-letmin = ['',1e20]
+letmax = 0
+letmin = 1e20
 for let in letters:
-	if letters[let] > letmax[1]:
-		letmax[1] = letters[let]
-		letmax[0] = let
-	if letters[let] < letmin[1]:
-		letmin[1] = letters[let]
-		letmin[0] = let	
+	letmax = max(letmax,letters[let])
+	letmin = min(letmin,letters[let])
 		
-print(letmin,letmax,letmax[1] - letmin[1])
+print(letmax - letmin)
