@@ -13,7 +13,6 @@ target = [[253,280],[-73,-46]]
 
 hits = []
 for vy in range(target[1][0],200):
-	hit = []
 	for vx in range(0,target[0][1]+1):
 		pos = [0,0]
 		v = [vx,vy]
