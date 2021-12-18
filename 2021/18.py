@@ -14,32 +14,30 @@ def import_data(filename):
 def add_n(n1,n2):
 	added = ['['] + n1 + [','] + n2 + [']']
 	return added
-
-def find_left_n(line,pos):
-	i = pos
-	while type(line[i]) != int:
-		i -= 1
-		if i == 0:
-			return False
-	return i
-	
-def find_right_n(line,pos):
-	i = pos+5
-	while type(line[i]) != int:
-		i += 1
-		if i == len(line):
-			return False
-	return i
 	
 def explode_all(line):
 	def explode(line,i):
+		def find_left_n(line,pos):
+			i = pos-4
+			while type(line[i]) != int:
+				i -= 1
+				if i == -1:
+					return False
+			return i
+		def find_right_n(line,pos):
+			i = pos+1
+			while type(line[i]) != int:
+				i += 1
+				if i == len(line):
+					return False
+			return i
 		j = find_left_n(line,i)
 		if j:
-			line[j] += line[i+1]
+			line[j] += line[i-3]
 		j = find_right_n(line,i)
 		if j:
-			line[j] += line[i+3]
-		return line[:i] + [0] + line[i+5:]
+			line[j] += line[i-1]
+		return line[:i-4] + [0] + line[i+1:]
 	op = 0
 	i = 0
 	while i < len(line):
@@ -48,7 +46,7 @@ def explode_all(line):
 			op += 1
 		elif char == ']':
 			if op >= 5:
-				return explode(line,i-4),True
+				return explode(line,i),True
 			op -= 1
 		i += 1
 	return line,False
@@ -57,7 +55,6 @@ def split_all(line):
 	def split_n(line,i):
 		newpair = ['[', int(char/2), ',', int(char/2+0.5), ']']
 		return line[:i] + newpair + line[i+1:]
-	op = 0
 	i = 0
 	while i < len(line):
 		char = line[i]
