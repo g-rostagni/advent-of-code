@@ -1,4 +1,4 @@
-# takes about 3min to run, can't be bothered doing actual optimisation
+# now runs in about 1m30, still can't be bothered doing actual optimisation
 
 def import_data(filename):
 	f = open(filename,'r')
@@ -42,21 +42,20 @@ def rotations(scanner,r=-1):
 def find_rel_pos(scannerA,scannerB):
 	found = False
 	for ib in range(len(scannerB)):
-		beaconB = scannerB[ib]
-		scannerBrot = rotations(rel_coords(scannerB,beaconB))
+		scannerBrot = rotations(rel_coords(scannerB,scannerB[ib]))
 		for beaconA in scannerA:
 			scannerArel = rel_coords(scannerA,beaconA)
 			for r in range(24):
 				sB = scannerBrot[r]
 				common = 0
-				for bA in scannerArel:
-					for bB in sB:
-						if bA == bB:
-							common += 1
-							if common >= 12:
-								return beaconA,ib,r
-							break
-	return False,False,False
+				for bB in sB:
+					if bB in scannerArel:
+						common += 1
+						if common == 12:
+							beaconB = rotations(scannerB,r)[ib]
+							posAB = [beaconA[k] - beaconB[k] for k in range(3)]
+							return [posAB,r]
+	return 1
 
 
 scanners = import_data('19-data')
@@ -71,15 +70,14 @@ while notabs:
 		if not scanners[i]:
 			continue
 		scannerB = scanners[i]
-		beacon0,ib,r = find_rel_pos(scanner0,scannerB)
-		if not beacon0:
+		x = find_rel_pos(scanner0,scannerB)
+		try:
+			[pos_scan[i],r] = x
+		except TypeError:
 			continue
-		scannerBrot = rotations(scannerB,r)
-		beaconB = scannerBrot[ib]
-		pos_scan[i] = [beacon0[k] - beaconB[k] for k in range(3)]
 		print('found overlap in scanners 0 and',i)
 		
-		for b in scanners[i]:
+		for b in scannerB:
 			brot = rotations([b],r)[0]
 			babs = [pos_scan[i][k] + brot[k] for k in range(3)]
 			if babs not in scanner0:
