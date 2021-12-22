@@ -38,7 +38,7 @@ def get_winners(scoresA,scoresB,wontot):
 	scoresA = update_possible_scores(scoresA)
 	scoresA,won = check_win(scoresA)
 	wontot += won * get_total_mult(scoresB)
-	return scoresA,scoresB,wontot
+	return scoresA,wontot
 			
 
 # input: p1 starts at 4, p2 starts at 2	
@@ -53,9 +53,9 @@ universes_won = [0,0]
 turn = 0
 while get_total_mult(scores1) or get_total_mult(scores2):
 	if not turn%2:
-		scores1,scores2,universes_won[0] = get_winners(scores1,scores2,universes_won[0])
+		scores1,universes_won[0] = get_winners(scores1,scores2,universes_won[0])
 	else:
-		scores2,scores1,universes_won[1] = get_winners(scores2,scores1,universes_won[1])
+		scores2,universes_won[1] = get_winners(scores2,scores1,universes_won[1])
 	turn += 1
 
 print(max(universes_won))
