@@ -89,21 +89,8 @@ def get_dests(origin,cave):
 		if is_move_valid(origin,d,cave):
 			dests.append(d)
 	return dests
-			
+				
 def get_moves(cave,cost):
-	global costGLB
-	if cost >= costGLB:
-		return
-	if all_parked(cave):
-		print('new minimal cost found:',cost)
-		costGLB = cost
-		return
-	for origin in get_origins(cave):
-		for dest in get_dests(origin,cave):			
-			cavetemp,costt = move_amphipod(origin,dest,cave)
-			get_moves(cavetemp,cost+costt)
-			
-def get_moves0(cave,cost):
 	global costGLB
 	if all_parked(cave):
 		print('new solution found:',cost)
@@ -135,6 +122,6 @@ startcave[4]= ['','','B','','C','','A','','C','','']
 
 cave = copy.deepcopy(startcave)
 
-get_moves0(cave,0)
+get_moves(cave,0)
 	
 print('all done! minimal cost:',costGLB)
