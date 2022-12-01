@@ -2,15 +2,10 @@ elves = []
 elf = []
 
 # read from the data file
-# temporarily stores the indiviual foodstuff carried by one elf in an array
-# when meeting an empty line, store the calories carried by one elf into the elves array and move on
+# use a list comprehension to create an array of all elves containing arrays of what individual elves are carrying
 with open("1-data") as f:
-	for line in f:
-		if line.strip():
-			elf.append(int(line.strip()))
-		else:
-			elves.append(elf)
-			elf = []
+	data = f.read()
+	elves = [[int(item) if item else 0 for item in elf.split("\n")] for elf in data.split("\n\n")]
 		
 # sum over calories carried by each elf and sort it from least to most
 cals = [sum(elf) for elf in elves]
