@@ -1,6 +1,3 @@
-elves = []
-elf = []
-
 # read from the data file
 # use a list comprehension to create an array of all elves containing arrays of what individual elves are carrying
 with open("1-data") as f:
