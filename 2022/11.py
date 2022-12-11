@@ -11,7 +11,7 @@ class Monkey:
 	# define what happens when the monkey throws an item
 	def throw(self,item):
 		self.handled += 1							# add 1 to the number of handled items
-		worry_level = eval(self.op.split("=")[-1].replace("old",str(item)))	# apply the operation to the worry level (by evaluating the string expression)
+		worry_level = eval(self.op.replace("old",str(item)))			# apply the operation to the worry level (by evaluating the string expression)
 		# worry_level = int(worry_level/3)					# divide the worry level by 3, (un)comment this for part 1 (2)
 		worry_level %= mod_prod							# mod the worry level by a global factor to keep it in check
 		if not worry_level % self.test[0]:					# if the test is satisfied:
@@ -28,7 +28,7 @@ monkeys = []
 mod_prod = 1
 for monkey in monkeys_text:
 	items = monkey[1].split(":")[-1].split(",")	# the items each monkey is initially carrying
-	op = monkey[2].split(":")[-1]			# the operation each monkey applies on the worry level
+	op = monkey[2].split("=")[-1]			# the operation each monkey applies on the worry level
 	test = []
 	test.append(int(monkey[3].split(" ")[-1]))	# the test each monkey does before throwing
 	test.append(int(monkey[4].split(" ")[-1]))	# the destination if the test is satisfied
