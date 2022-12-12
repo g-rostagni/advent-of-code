@@ -13,38 +13,29 @@ with open("12-data","r") as f:
 # start by defining the grid that contains the number of steps to get to a given cell	
 steps = [[10000 for p in line] for line in grid]
 
-# find the starting point for the algorithm (E)
-found = False
+# find the starting (E) and finishing (S) points for the algorithm
+foundE = False
+foundS = False
 for y in range(len(grid)):
 	for x in range(len(grid[0])):
-		if grid[y][x] == "E":
+		if grid[y][x] == "E":		# when we find the starting point:
 			queue = [[y,x]]		# tell the algorithm to start by looking from there
 			steps[y][x] = 0		# 0 steps required to get to the origin
 			grid[y][x] = "z"	# replace the E with the height (z) for the algorithm to work when it reaches it
-			found = True
-			break
-	if found:
-		break
-		
-# find the finishing point for the algorithm (S)
-found = False
-for y in range(len(grid)):
-	for x in range(len(grid[0])):
-		if grid[y][x] == "S":
+			foundE = True
+		if grid[y][x] == "S":		# when we find the finishing point:
 			start = [y,x]		# write down its coordinates for later
-			grid[y][x] = "a"	# replace the A with the height (a) for the algorithm to work when it reaches it
-			found = True
+			grid[y][x] = "a"	# replace the S with the height (a) for the algorithm to work when it reaches it
+			foundS = True
+		if foundE and foundS:
 			break
-	if found:
+	if foundE and foundS:
 		break
 	
 # Djikstra's algorithm, but in reverse: starting from the finishing point and finding the shortest path to the starting point
 while queue:								# if there are no more squares to look at, we have found the shortest path to the goal
 	queuenext = []
 	for square in queue:						# loop over all squares we need to look at
-		if square == start:					# if we have reached the start S, there is nothing to do
-			continue
-		
 		for p in adjacent(square[0],square[1]):			# find all squares we are allowed to go to from here
 			newcost = steps[square[0]][square[1]] + 1	# it takes one more step to get to the next square
 			if newcost < steps[p[0]][p[1]]:			# if the number of steps taken to reach the next square is lower than we previously found:
