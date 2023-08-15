@@ -3,16 +3,16 @@ import re
 def rules1(s):
     if len(re.findall(r'[aeiou]',s)) < 3:
         return False
-    if not re.search(r'(\w)\1', s):   # need the r to make sure Python doesn't try to interpret the \ before regex
+    if not re.search(r'(\w)\1',s):   # need the r to make sure Python doesn't try to interpret the \ before regex
         return False
     if re.search(r'ab|cd|pq|xy',s):
         return False
     return True
     
 def rules2(s):
-    if not re.search(r'(\w)(\w).*\1\2',s):
+    if not re.search(r'(\w{2}).*\1',s):
         return False
-    if not re.search(r'(\w)\w\1', s):
+    if not re.search(r'(\w).\1',s):
         return False
     return True
 
