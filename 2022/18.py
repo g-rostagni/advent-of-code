@@ -79,11 +79,3 @@ for cube in extcubes:
 	
 trappedsides = get_sides(trappedcubes)	# get the number of exposed sides of the trapped cubes
 print(lavasides - trappedsides)		# subtract these from the total number of exposed sides of the lava cubes to obtain the answer
-				
-# consider all cubes
-# generate all cubes that can be filled by air from outside
-# subtract all of these from the total
-# subtract all lava cubes from the total 
-# we are left with the set of cubes that cannot be reached
-# calculate the exposed sides of these cubes
-# subtract this from the exposed sides of the lava

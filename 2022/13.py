@@ -71,7 +71,7 @@ def quicksort(data):
 	
 
 # import the input as a string
-with open("13-test","r") as f:
+with open("13-data","r") as f:
 	data = [[line for line in pair.split("\n") if line] for pair in f.read().split("\n\n")]
 	#inputs = [eval(line) for line in f.readlines() if line.strip()]
 

@@ -60,3 +60,60 @@ for sensor in coords:									# loop over all sensors, to find the points lying 
 		break
 	
 print(int(4e6*x + y))	# print the frequency of the hidden beacon
+
+
+
+# for a given line on the boundary, instead of testing all the line, find the end of exclusion by gradient descent:
+# find the sensor that excludes the start of the line
+# see if that sensors excludes the end:
+#	if yes all the line is excluded
+#	if not, test the middle of the line, go on until we pinpoint the end point of the exclusion zone
+# update the line and restrict it to a smaller segment until we get nothing, or a single point
+def on_grid(p):
+	if p[0] < 0:
+	
+	elif p[
+	
+	return True if 0 <= p[0] <= 4000000 and 0 <= p[1] <= 4000000 else False
+
+def to_grid(x):
+	if x < 0:
+		return 0
+	elif x > 4000000:
+		return 4000000
+	else:
+		return x
+		
+lines = []
+for sensor in coords:
+	range_s = abs(sensor[0][0] - sensor[1][0]) + abs(sensor[0][1] - sensor[1][1])	# calculate the range of the sensor
+	c_lef = [sensor[0][0] - range_s, sensor[0][1]]
+	c_top = [sensor[0][0], sensor[0][1] + range_s]
+	c_rig = [sensor[0][0] + range_s, sensor[0][1]]							
+	c_bot = [sensor[0][0], sensor[0][1] - range_s]
+	lines += = [[c_lef,c_top,1], [c_top,c_rig,-1], [c_bot,c_rig,1], [c_lef,c_bot,-1]] # order lines so they go left to right, and add y direction
+
+# restrict lines to the grid
+# a line is described by 2 points: a,b
+# if xa < 0:
+#	need to increase xa to 0, modify ya accordingly
+# elif xa > 4e6
+#	need to decrease xa to 4e6, modify ya accordingly
+# if ya < 0:
+#	need to increase ya to 0, modify xa accordingly
+# elif ya > 4e6:
+#	need to decrease ya to 4e0, modify xa accordingly
+# do the same for b
+for l in range(len(lines)):	# loop over lines
+	for p in lines[l]:	# loop over start and end points
+		a = lines[l][p]
+		if lines[l][p][0] < 0:
+			pass
+		elif lines[l][p][0] > 4000000:
+			pass
+		if lines[l][p][1] < 0:
+			pass
+		elif lines[l][p][1] > 4000000:
+			pass
+			
+	

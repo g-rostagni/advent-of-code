@@ -45,8 +45,8 @@ def main(a=0):
 				i += 1
 				continue
 				
-			wires[l[-1]] = ~x
-			
+			wires[l[-1]] = ~x % 65536	# mod the result to make sure it is unsigned
+
 		else:					# if the instruction is a simple assignment
 			if (x := readvar(l[0])) == 'skip':
 				i += 1
@@ -54,8 +54,6 @@ def main(a=0):
 				
 			wires[l[-1]] = x
 			
-		wires[l[-1]] %= 65536			# mod the result to make sure it fits within 16-bits
-	
 		# if we passed a value as an argument, override the assignment to wire 'b'
 		if a and l[-1] == 'b':
 			wires['b'] = a

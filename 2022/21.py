@@ -40,6 +40,6 @@ while diff > 0.1:					# while this difference is greater than 0.1 (arbitrary num
 	diff = abs(eval(expr))
 	
 x = int(round(x,0))			# get the closest integer to the number we found
-if eval(expr):				# if it doesn't work
+if eval(expr):				# if it doesn't work,
 	print("Minimising failed")	# tough luck
 print(x)
