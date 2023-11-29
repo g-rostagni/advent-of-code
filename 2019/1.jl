@@ -9,7 +9,7 @@ end
 tot = 0
 tot2 = 0
 
-for line in eachline("1-input")		# read the file line by line
+for line in eachline("1-data")		# read the file line by line
 	mass = parse(UInt32, line)	# get a mass
 	fuel = get_fuel(mass)		# get the fuel required for that mass
 	global tot += fuel		# add the fuel to the total (part 1)
@@ -22,4 +22,4 @@ for line in eachline("1-input")		# read the file line by line
 	
 end
 
-@printf "%i, %i \n" tot tot2
+@printf "%i %i \n" tot tot2
