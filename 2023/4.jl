@@ -21,9 +21,7 @@ function main()
 
 	for i in 1:length(nwins)			# loop over all the cards
 		wins = nwins[i]				# get the number of winning numbers we got on that card
-		if wins == 0				# if there are none do nothing
-			continue
-		end
+		wins == 0 && continue			# if there are none do nothing
 	
 		score += 2^(wins - 1)			# add the score of the card to the total
 		for j in 1:wins				
