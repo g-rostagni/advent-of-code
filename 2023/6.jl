@@ -1,9 +1,7 @@
 # a function to import the race data
 function get_races(ind)
-	f = open("6-data")					# open file	
-	data = readlines(f)[ind]				# read the line we care about
+	data = readlines("6-data")[ind]				# read the line we care about
 	races = [parse(Int64, x) for x in split(data)[2:end]]	# shove the data into an array
-	close(f)
 	return races						# return the array
 end
 
