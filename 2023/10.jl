@@ -9,13 +9,16 @@ function find_path()
 	end
 		
 	# a function to do the first step
-	function get_first_step(coord)
+	function get_first_step(c)
+		row = c[1]
+		col = c[2]
+	
 		# find the two possible directions we can start in
 		coords = []
-		grid[coord[1]-1][coord[2]] in "|F7" && push!(coords, [(coord[1]-1,coord[2]), 'u'])
-		grid[coord[1]+1][coord[2]] in "|JL" && push!(coords, [(coord[1]+1,coord[2]), 'd'])
-		grid[coord[1]][coord[2]-1] in "-LF" && push!(coords, [(coord[1],coord[2]-1), 'l'])
-		grid[coord[1]][coord[2]+1] in "-J7" && push!(coords, [(coord[1],coord[2]+1), 'r'])	
+		grid[row-1][col] in "|F7" && push!(coords, [(row-1, col), 'u'])
+		grid[row+1][col] in "|JL" && push!(coords, [(row+1, col), 'd'])
+		grid[row][col-1] in "-FL" && push!(coords, [(row, col-1), 'l'])
+		grid[row][col+1] in "-J7" && push!(coords, [(row, col+1), 'r'])	
 		
 		# find what pipe 'S' stands for
 		(coords[1][2] == 'u' && coords[2][2] == 'd') && (return coords, '|')
@@ -29,11 +32,11 @@ function find_path()
 	end
 	
 	# a function to move one step down the pipe
-	function move_around(c)
-		row = c[1][1]
-		col = c[1][2]
+	function move_around(cd)
+		row = cd[1][1]
+		col = cd[1][2]
 		p = grid[row][col]	# the pipe we are looking at
-		d = c[2]		# the direction we are coming from
+		d = cd[2]		# the direction we are coming from
 		
 		# depending on the pipe we are at and the direction we are coming from, figure out where we are going and return the next coordinates and new direction
 		if p == '|'
