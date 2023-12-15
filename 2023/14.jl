@@ -21,7 +21,7 @@ function tilt(dir::Int64)
 end
 
 # a function to perform many cycles making use of repeating patterns
-function many_cyc(cmax::Int64)::Int64
+function many_cyc(cmax::Int64)
 	scores::Dict{Int128,Int64} = Dict()				# a dictionary containing hashes and the corresponding scores 
 	s = 0								# the current score
 	
@@ -57,7 +57,7 @@ function many_cyc(cmax::Int64)::Int64
 		end
 		c += 1							# increment cycles
 	end
-	return s							# return the score
+	return 0
 end
 
 # a function to get the score
@@ -68,6 +68,7 @@ end
 const dirs::Dict{Int64,Tuple{Int64,Int64}} = Dict(1 => (1,0), 2 => (0,1), 3 => (-1,0), 4 => (0,-1))	# define the directions NWSE respectively
 grid::Vector{Vector{Char}} = [[c for c in l] for l in readlines("14-data")]				# get the data
 
-tilt(1)													# tilt the grid to the north
-get_score() |> println											# read the corresponding score (part 1)
-Int(1e9) |> many_cyc |> println										# do 1e9 cycles and read the final score (part 2)
+tilt(1)			# tilt the grid to the north
+get_score() |> println	# read the corresponding score (part 1)
+many_cyc(Int(1e9))	# do 1e9 cycles			
+get_score() |> println	# read the final score (part 2)			
