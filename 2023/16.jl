@@ -6,21 +6,19 @@ function beamin(c::Tuple{Int64,Int64,Int64})::Int64
 	while length(q) > 0	# while the queue isn't empty
 		y,x,d = q[1]	# start from the first point in the queue and get the coordinates and direction
 		
-		while 1 <= y <= length(grid) && 1 <= x <= length(grid[1])		# while we haven't reached the end of the grid
-			if d in get(energised, (y,x), 0)				# if we have already gone through this tile in this direction, break
-				break
-			else								# otherwise add it to the list of locations we visited
-				haskey(energised, (y,x)) || (energised[(y,x)] = [])
-				push!(energised[(y,x)], d)
-			end	
+		while 1 <= y <= length(grid) && 1 <= x <= length(grid[1])	# while we haven't reached the end of the grid
+			d in get(energised, (y,x), 0) && break			# if we have already gone through this tile in this direction, break
 			
-			if grid[y][x] == '/'						# if we meet a mirror
-				d = sl[d]						# update the direction
-			elseif grid[y][x] == '\\'					
+			haskey(energised, (y,x)) || (energised[(y,x)] = [])	# otherwise add it to the list of locations we visited
+			push!(energised[(y,x)], d)
+			
+			if grid[y][x] == '/'			# if we meet a mirror
+				d = sl[d]			# update the direction
+			elseif grid[y][x] == '\\'		
 				d = bs[d]						
-			elseif grid[y][x] == '-' && d % 2 == 0				# if we meet a splitter perpendicularly
-				d = 1							# pick a direction
-				push!(q, (y, x-1, 3))					# and add the other beam direction to the queue
+			elseif grid[y][x] == '-' && d % 2 == 0	# if we meet a splitter perpendicularly
+				d = 1				# pick a direction
+				push!(q, (y, x-1, 3))		# and add the other beam direction to the queue
 			elseif grid[y][x] == '|' && d % 2 != 0
 				d = 2
 				push!(q, (y-1, x, 4))
